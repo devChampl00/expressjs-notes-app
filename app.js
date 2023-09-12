@@ -8,7 +8,9 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 
-app.get('Berhasil!')
+app.get('/', (req, res) => {
+  res.send('Berhasil!')
+})
 app.use('/api/notes', note)
 
 app.listen(port, () => {
