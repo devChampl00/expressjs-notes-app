@@ -9,7 +9,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 
 app.get('/', (req, res) => {
-  res.send('Berhasil!')
+  res.send('Ini adalah api catatan sederhana dengan Node.js Express.js!')
 })
 app.use('/api/notes', note)
 
