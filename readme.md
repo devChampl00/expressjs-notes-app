@@ -1,6 +1,6 @@
 # Catatan API
 
-API sederhana untuk mengelola catatan menggunakan Node.js dan Express.js.
+API sederhana untuk mengelola catatan menggunakan Node.js, Express.js, dan SQLite dengan Sequelize ORM.
 
 ## Fitur
 - Menampilkan semua catatan
@@ -16,19 +16,31 @@ API sederhana untuk mengelola catatan menggunakan Node.js dan Express.js.
    ```
 2. Masuk ke direktori proyek:
    ```sh
-   cd nama-proyek
+   cd express-notes-api
    ```
 3. Install dependensi:
    ```sh
    npm install
    ```
 
+## Struktur Database
+Aplikasi ini menggunakan SQLite sebagai database dengan Sequelize sebagai ORM. Model utama adalah `Note` dengan struktur sebagai berikut:
+
+- `id`: Integer (Primary Key, Auto Increment)
+- `title`: String (Required)
+- `content`: Text (Required)
+- `tags`: JSON Array (Optional)
+- `createdAt`: DateTime
+- `updatedAt`: DateTime
+
+Database disimpan dalam file `database.sqlite` di root proyek.
+
 ## Menjalankan Server
 Jalankan perintah berikut untuk menjalankan server:
 ```sh
 npm start
 ```
-Server akan berjalan di `http://localhost:3000`.
+Server akan berjalan di `http://localhost:9876`.
 
 ## Endpoint API
 ### 1. **Mendapatkan Semua Catatan**
@@ -44,7 +56,7 @@ Server akan berjalan di `http://localhost:3000`.
              "id": "abc123",
              "title": "Judul Catatan",
              "tags": ["tag1", "tag2"],
-             "body": "Isi catatan",
+             "content": "Isi catatan",
              "createdAt": "2024-03-13T10:00:00.000Z",
              "updatedAt": "2024-03-13T10:00:00.000Z"
            }
@@ -61,7 +73,7 @@ Server akan berjalan di `http://localhost:3000`.
      {
        "title": "Judul Baru",
        "tags": ["tag1", "tag2"],
-       "body": "Isi catatan baru"
+       "content": "Isi catatan baru"
      }
      ```
    - **Response:**
@@ -103,7 +115,7 @@ Server akan berjalan di `http://localhost:3000`.
      {
        "title": "Judul Baru",
        "tags": ["tag1", "tag2"],
-       "body": "Isi catatan diperbarui"
+       "content": "Isi catatan diperbarui"
      }
      ```
    - **Response:**
@@ -128,5 +140,7 @@ Server akan berjalan di `http://localhost:3000`.
 ## Teknologi yang Digunakan
 - Node.js
 - Express.js
-- nanoid (untuk membuat ID unik)
-- CORS
+- SQLite (database)
+- Sequelize (ORM)
+- express-async-handler (untuk penanganan error asinkron)
+- cors (untuk mengelola Cross-Origin Resource Sharing)
