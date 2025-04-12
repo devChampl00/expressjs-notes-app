@@ -12,9 +12,9 @@ yarn-error.log
 .env.test.local
 .env.production.local
 
-# Database
-*.sqlite
-*.sqlite-journal
+# Local development
+.vercel
+.netlify
 
 # Logs
 logs

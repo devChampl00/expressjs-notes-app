@@ -32,5 +32,5 @@ app.use('/api/notes', notesRoutes);
 // Error Handling
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 9876;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

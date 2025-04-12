@@ -1,25 +1,32 @@
-const { Sequelize } = require('sequelize');
-const path = require('path');
+const { createClient } = require('@supabase/supabase-js');
+require('dotenv').config();
 
-// Create a SQLite database connection
-const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: path.join(__dirname, '../database.sqlite'),
-  logging: false
-});
+// Create a Supabase client
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_KEY;
+
+if (!supabaseUrl || !supabaseKey) {
+  console.error('Missing Supabase credentials. Please set SUPABASE_URL and SUPABASE_KEY in .env file');
+  process.exit(1);
+}
+
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Test the connection
 const connectDB = async () => {
   try {
-    await sequelize.authenticate();
-    console.log('Database connection established successfully');
-    // Sync all models with force option to update schema
-    await sequelize.sync({ alter: true });
-    console.log('Database synchronized and schema updated');
+    const { data, error } = await supabase.from('health_check').select('*').limit(1);
+    
+    if (error) {
+      throw new Error(`Supabase connection error: ${error.message}`);
+    }
+    
+    console.log('Supabase connection established successfully');
   } catch (error) {
-    console.error('Unable to connect to the database:', error);
-    process.exit(1);
+    console.error('Unable to connect to Supabase:', error.message);
+    console.log('Note: You may need to create a health_check table in your Supabase database');
+    // Don't exit process as the table might not exist yet
   }
 };
 
-module.exports = { connectDB, sequelize };
+module.exports = { connectDB, supabase };
